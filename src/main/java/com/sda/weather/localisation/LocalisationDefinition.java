@@ -6,11 +6,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class LocalisationDto {
-    Long id;
+public class LocalisationDefinition {
     String cityName;
     String countryName;
     Float latitude;

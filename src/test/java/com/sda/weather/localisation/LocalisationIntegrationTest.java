@@ -1,4 +1,4 @@
-package com.sda.weather;
+package com.sda.weather.localisation;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

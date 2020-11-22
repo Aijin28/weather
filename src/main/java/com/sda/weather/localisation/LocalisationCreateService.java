@@ -11,23 +11,29 @@ public class LocalisationCreateService {
     final LocalisationRepository localisationRepository;
 
     Localisation createLocalisation(String cityName, String countryName, String region, Float longitude, Float latitude) {
-        if (cityName == null && countryName == null && longitude == null && latitude == null) {
+        if (cityName.isBlank() && countryName.isBlank()) {
             throw new BadCreationParametersException("Parameters cannot be empty (region is optional)");
         }
-        if (longitude < -90 && longitude > 90) {
-            throw new BadCreationParametersException("Longitude out of range (-90 to 90)");
+        if (longitude.isNaN() && latitude.isNaN()) {
+            throw new BadCreationParametersException("Longitude and latitude must have numeral values");
         }
-        if (latitude < -180 && latitude > 180) {
-            throw new BadCreationParametersException("Latitude out of range (-180 to 180)");
+        if (longitude < -180f && longitude > 180f) {
+            throw new BadCreationParametersException("Longitude out of range (-180 to 180)");
+        }
+        if (latitude < -90f && latitude > 90f) {
+            throw new BadCreationParametersException("Latitude out of range (-90 to 90)");
         }
         Localisation localisation = new Localisation();
         localisation.setCityName(cityName);
         localisation.setCountryName(countryName);
         localisation.setLatitude(latitude);
         localisation.setLongitude(longitude);
-        if (region != null) {
+        if (!region.isBlank()) {
             localisation.setRegion(region);
+        } else {
+            localisation.setRegion("...");
         }
+        System.out.println("localisation service: " + localisation);
         return localisationRepository.save(localisation);
     }
 }

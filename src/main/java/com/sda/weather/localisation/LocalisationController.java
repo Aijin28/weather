@@ -18,7 +18,7 @@ public class LocalisationController {
     @GetMapping("/localisation/{id}")
     LocalisationDto getLocalisation(@PathVariable Long id) {
         Localisation localisation = localisationFetchService.fetchLocalisation(id);
-        return localisationMapper.mapToLocalisation(localisation);
+        return localisationMapper.mapLocalisationDtoToLocalisation(localisation);
     }
 
     @PostMapping("/localisation")
@@ -31,6 +31,6 @@ public class LocalisationController {
             Localisation localisation = localisationCreateService.createLocalisation(cityName, countryName, region, longitude, latitude);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(localisationMapper.mapToLocalisation(localisation));
+                .body(localisationMapper.mapLocalisationDtoToLocalisation(localisation));
     }
 }
