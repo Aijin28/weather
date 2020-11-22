@@ -18,13 +18,13 @@ public class ExceptionHandlerController {
 
     @ExceptionHandler(LocalisationNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    void localosationNotFoundHandler(LocalisationNotFoundException exception){
+    void localisationNotFoundHandler(LocalisationNotFoundException exception){
         log.error(exception.getMessage());
     }
 
     @ExceptionHandler(RuntimeException.class)
     @ResponseStatus(HttpStatus.I_AM_A_TEAPOT)
-    void runetimeHandler(RuntimeException exception){
+    void runtimeHandler(RuntimeException exception){
         log.error("Because of " + exception.getMessage() + " I don't know, what to do. So I turned into a TEAPOT ¯\\_(ツ)_/¯");
     }
 }

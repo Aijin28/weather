@@ -15,6 +15,8 @@ public class LocalisationController {
     final LocalisationFetchService localisationFetchService;
     final LocalisationMapper localisationMapper;
 
+    // todo @GetMapping("/localisation")
+
     @GetMapping("/localisation/{id}")
     LocalisationDto getLocalisation(@PathVariable Long id) {
         Localisation localisation = localisationFetchService.fetchLocalisation(id);
@@ -28,7 +30,8 @@ public class LocalisationController {
         Float longitude = localisationDto.getLongitude();
         Float latitude = localisationDto.getLatitude();
         String region = localisationDto.getRegion();
-            Localisation localisation = localisationCreateService.createLocalisation(cityName, countryName, region, longitude, latitude);
+        // todo wrap a data LocationDefinition use mapper
+        Localisation localisation = localisationCreateService.createLocalisation(cityName, countryName, region, longitude, latitude);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(localisationMapper.mapLocalisationDtoToLocalisation(localisation));

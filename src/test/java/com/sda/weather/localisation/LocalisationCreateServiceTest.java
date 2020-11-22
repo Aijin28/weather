@@ -22,30 +22,39 @@ public class LocalisationCreateServiceTest {
 
     @Test
     void createLocalisation_callsLocalisationRepository() {
-//        given
+        // given
         when(localisationRepository.save(any(Localisation.class))).thenReturn(new Localisation());
-//        when
-        Localisation localisation = localisationCreateService.createLocalisation("cityTest", "countryTest", "regionTest", 0f, 0f);
-        System.out.println("localisation test : " + localisation);
-//        then
+        // when
+        localisationCreateService.createLocalisation("cityTest", "countryTest", "regionTest", 0f, 0f);
+        // then
         verify(localisationRepository).save(any(Localisation.class));
     }
 
     @Test
-    void createLocalisation_whenParameterIsBlank_throwsBadCreationParametersException(){
-//        when
+    void createLocalisation_whenRegionIsEmpty_callsLocalisationRepository() {
+        // given
+        when(localisationRepository.save(any(Localisation.class))).thenReturn(new Localisation());
+        // when
+        localisationCreateService.createLocalisation("cityTest", "countryTest", " ", 0f, 0f);
+        // then
+        verify(localisationRepository).save(any(Localisation.class));
+    }
+
+    @Test
+    void createLocalisation_whenParameterIsBlank_throwsBadCreationParametersException() {
+        // when
         Throwable result = catchThrowable(() -> localisationCreateService.createLocalisation("", "", "", 0f, 0f));
-//        then
+        // then
         assertThat(result).isExactlyInstanceOf(BadCreationParametersException.class);
         verify(localisationRepository, times(0)).save(any(Localisation.class));
     }
 
     @Test
-    void Createocalisation_whenLongitudeIsOutOfRange_throwsBadCreationParametersException(){
-//        when
-        Throwable result = catchThrowable(()->localisationCreateService.createLocalisation("cityTest", "countryTest", "regionTest", 666f, 0f));
-//        then
+    void createLocalisation_whenLongitudeIsOutOfRange_throwsBadCreationParametersException() {
+        // when
+        Throwable result = catchThrowable(() -> localisationCreateService.createLocalisation("cityTest", "countryTest", "regionTest", 181f, 0f));
+        // then
         assertThat(result).isExactlyInstanceOf(BadCreationParametersException.class);
-//        verify(localisationRepository, times(0)).save(any(Localisation.class));
+        verify(localisationRepository, times(0)).save(any(Localisation.class));
     }
 }
