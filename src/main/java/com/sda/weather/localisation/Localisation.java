@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Optional;
 
 @Entity
 @Data
@@ -26,8 +27,7 @@ public class Localisation {
     private Float longitude;
     private String region;
 
-    // todo uncomment
-//    public Optional<String> getRegion() {
-//        return Optional.ofNullable(region);
-//    }
+    public Optional<String> getRegion() {
+        return Optional.ofNullable(region);
+    }
 }

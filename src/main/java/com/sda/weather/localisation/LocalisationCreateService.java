@@ -10,28 +10,29 @@ public class LocalisationCreateService {
 
     final LocalisationRepository localisationRepository;
 
-    Localisation createLocalisation(String cityName, String countryName, String region, Float longitude, Float latitude) {
-        if (cityName.isBlank() && countryName.isBlank()) { // todo use ||
+    Localisation createLocalisation(LocalisationDefinition localisationDefinition) {
+        if (localisationDefinition.getCityName().isBlank() || localisationDefinition.getCountryName().isBlank()) {
             throw new BadCreationParametersException("Parameters cannot be empty (region is optional)");
         }
-        if (longitude.isNaN() && latitude.isNaN()) { // todo use ||
+        if (localisationDefinition.getLatitude().isNaN() || localisationDefinition.getLongitude().isNaN()) {
             throw new BadCreationParametersException("Longitude and latitude must have numeral values");
         }
-        if (longitude < -180f && longitude > 180f) { // todo use ||
+        if (localisationDefinition.getLongitude() < -180f || localisationDefinition.getLongitude() > 180f) {
             throw new BadCreationParametersException("Longitude out of range (-180 to 180)");
         }
-        if (latitude < -90f && latitude > 90f) { // todo use ||
+        if (localisationDefinition.getLatitude() < -90f || localisationDefinition.getLatitude() > 90f) {
             throw new BadCreationParametersException("Latitude out of range (-90 to 90)");
         }
 
-        Localisation localisation = new Localisation();
-        localisation.setCityName(cityName);
-        localisation.setCountryName(countryName);
-        localisation.setLatitude(latitude);
-        localisation.setLongitude(longitude);
+        Localisation localisation = Localisation.builder()
+                .cityName(localisationDefinition.getCityName())
+                .countryName(localisationDefinition.getCountryName())
+                .longitude(localisationDefinition.getLongitude())
+                .latitude(localisationDefinition.getLatitude())
+                .build();
 
-        if (!region.isBlank()) {
-            localisation.setRegion(region);
+        if (localisationDefinition.getRegion().isPresent()) {
+            localisation.setRegion(localisationDefinition.getRegion().get());
         }
 
         return localisationRepository.save(localisation);

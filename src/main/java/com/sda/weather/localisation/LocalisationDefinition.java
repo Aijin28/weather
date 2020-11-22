@@ -5,14 +5,20 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Optional;
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class LocalisationDefinition {
-    String cityName;
-    String countryName;
-    Float latitude;
-    Float longitude;
-    String region;
+    private String cityName;
+    private String countryName;
+    private Float latitude;
+    private Float longitude;
+    private String region;
+
+    public Optional<String> getRegion() {
+        return Optional.ofNullable(region);
+    }
 }
