@@ -13,7 +13,7 @@ public class LocalisationFetchService {
 
     final LocalisationRepository localisationRepository;
 
-    Localisation fetchLocalisation(Long id) {
+    public Localisation fetchLocalisation(Long id) {
         return localisationRepository.findById(id)
                 .orElseThrow(() -> new LocalisationNotFoundException(id));
     }
