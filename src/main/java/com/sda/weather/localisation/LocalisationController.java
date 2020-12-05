@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,13 +21,9 @@ public class LocalisationController {
 
     @GetMapping("/localisation")
     List<LocalisationDto> getAllLocalisations() {
-        List<Localisation> localisations = localisationFetchService.fetchAllLocalisations();
-        List<LocalisationDto> localisationsDto = new ArrayList<>();
-        for (Localisation localisation :
-                localisations) {
-            localisationsDto.add(localisationMapper.mapLocalisationToLocalisationDto(localisation));
-        }
-        return localisationsDto;
+        return localisationFetchService.fetchAllLocalisations().stream()
+                .map(localisationMapper::mapLocalisationToLocalisationDto)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/localisation/{id}")

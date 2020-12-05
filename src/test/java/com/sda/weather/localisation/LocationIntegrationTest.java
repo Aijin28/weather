@@ -1,5 +1,6 @@
 package com.sda.weather.localisation;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,13 +40,36 @@ public class LocationIntegrationTest {
                 .latitude(0f)
                 .build();
         String requestBody = objectMapper.writeValueAsString(testLocalisationDto);
-        MockHttpServletRequestBuilder request = post("/localisation")
+        MockHttpServletRequestBuilder post = post("/localisation")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestBody);
 //        when
-        MvcResult result = mockMvc.perform(request).andReturn();
+        MvcResult result = mockMvc.perform(post).andReturn();
 //        then
         MockHttpServletResponse response = result.getResponse();
         assertThat(response.getStatus()).isEqualTo(HttpStatus.CREATED.value());
+    }
+
+    @Test
+    void createNewLocalisation_whenCityNameIsEmpty_returnBADREQUESTStatusCode() throws Exception {
+//        given
+        localisationRepository.deleteAll();
+        LocalisationDto testLocalisationDto = LocalisationDto
+                .builder()
+                .cityName("")
+                .countryName("countryTest")
+                .region("regionTest")
+                .longitude(0f)
+                .latitude(0f)
+                .build();
+        String requestBody = objectMapper.writeValueAsString(testLocalisationDto);
+        MockHttpServletRequestBuilder post = post("/localisation")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestBody);
+//        when
+        MvcResult result = mockMvc.perform(post).andReturn();
+//        then
+        MockHttpServletResponse response = result.getResponse();
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
 }

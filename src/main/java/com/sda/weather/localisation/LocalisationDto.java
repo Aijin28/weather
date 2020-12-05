@@ -19,7 +19,4 @@ public class LocalisationDto {
     private Float longitude;
     private String region;
 
-    public Optional<String> getRegion() {
-        return Optional.ofNullable(region);
-    }
 }
