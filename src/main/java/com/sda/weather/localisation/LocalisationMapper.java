@@ -5,21 +5,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class LocalisationMapper {
 
-    LocalisationDto mapLocalisationToLocalisationDto(Localisation localisation) {
-        return LocalisationDto
-                .builder()
+    LocalisationDto mapToLocalisationDtoFrom(Localisation localisation) {
+        return LocalisationDto.builder()
                 .id(localisation.getId())
                 .cityName(localisation.getCityName())
                 .countryName(localisation.getCountryName())
                 .latitude(localisation.getLatitude())
                 .longitude(localisation.getLongitude())
-                .region(localisation.getRegion().orElse(""))
+                .region(localisation.getRegion().orElse(null))
                 .build();
     }
 
-    LocalisationDefinition mapLocalisationDtoToLocalisationDefinition(LocalisationDto localisationDto) {
-        return LocalisationDefinition
-                .builder()
+    LocalisationDefinition mapToLocalisationDefinitionFrom(LocalisationDto localisationDto) {
+        return LocalisationDefinition.builder()
                 .cityName(localisationDto.getCityName())
                 .countryName(localisationDto.getCountryName())
                 .region(localisationDto.getRegion())

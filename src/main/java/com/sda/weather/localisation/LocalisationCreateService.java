@@ -31,9 +31,10 @@ public class LocalisationCreateService {
                 .latitude(localisationDefinition.getLatitude())
                 .build();
 
-        if (localisationDefinition.getRegion().isPresent()) {
-            localisation.setRegion(localisationDefinition.getRegion().get());
-        }
+        localisationDefinition.getRegion().ifPresent(localisation::setRegion);
+//        if (localisationDefinition.getRegion().isPresent()) {
+//            localisation.setRegion(localisationDefinition.getRegion().get());
+//        }
 
         return localisationRepository.save(localisation);
     }

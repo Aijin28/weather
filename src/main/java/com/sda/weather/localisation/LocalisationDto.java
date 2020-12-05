@@ -12,11 +12,11 @@ import java.util.Optional;
 @NoArgsConstructor
 @Builder
 public class LocalisationDto {
+
     private Long id;
     private String cityName;
     private String countryName;
     private Float latitude;
     private Float longitude;
     private String region;
-
 }

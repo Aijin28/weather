@@ -6,7 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,22 +21,22 @@ public class LocalisationController {
     @GetMapping("/localisation")
     List<LocalisationDto> getAllLocalisations() {
         return localisationFetchService.fetchAllLocalisations().stream()
-                .map(localisationMapper::mapLocalisationToLocalisationDto)
+                .map(localisationMapper::mapToLocalisationDtoFrom)
                 .collect(Collectors.toList());
     }
 
     @GetMapping("/localisation/{id}")
     LocalisationDto getLocalisation(@PathVariable Long id) {
         Localisation localisation = localisationFetchService.fetchLocalisation(id);
-        return localisationMapper.mapLocalisationToLocalisationDto(localisation);
+        return localisationMapper.mapToLocalisationDtoFrom(localisation);
     }
 
     @PostMapping("/localisation")
     ResponseEntity<LocalisationDto> createLocalisation(@RequestBody LocalisationDto localisationDto) {
-        LocalisationDefinition localisationDefinition = localisationMapper.mapLocalisationDtoToLocalisationDefinition(localisationDto);
+        LocalisationDefinition localisationDefinition = localisationMapper.mapToLocalisationDefinitionFrom(localisationDto);
         Localisation localisation = localisationCreateService.createLocalisation(localisationDefinition);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(localisationMapper.mapLocalisationToLocalisationDto(localisation));
+                .body(localisationMapper.mapToLocalisationDtoFrom(localisation));
     }
 }

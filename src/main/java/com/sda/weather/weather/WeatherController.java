@@ -12,16 +12,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class WeatherController {
 
     private final WeatherService weatherService;
-private final WeatherMapper weatherMapper;
+    private final WeatherMapper weatherMapper;
 
-    @GetMapping("/localisation/{id}/wweather")
-    WeatherDto getWeather(@PathVariable Long id, @RequestParam(required = false) String period){
+    @GetMapping("/localisation/{id}/weather")
+    WeatherDto getWeather(@PathVariable Long id, @RequestParam(required = false) String period) {
         Weather weather = weatherService.getWeather(id, period);
         return weatherMapper.mapToWeatherDto(weather);
     }
 
     @GetMapping("/weather")
-    String getWeather(@RequestParam String cityName, @RequestParam(required = false) String date){
+    String getWeather(@RequestParam String cityName, @RequestParam(required = false) String date) {
         return null;
     }
 }
